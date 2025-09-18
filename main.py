@@ -1,7 +1,5 @@
-# --- THE FIX: This must be the very first thing the program does ---
 import eventlet
 eventlet.monkey_patch()
-# ------------------------------------------------------------------
 
 import discord
 from discord.ext import tasks
@@ -15,7 +13,7 @@ import json
 from collections import deque
 import logging
 
-# --- PROFESSIONAL LOGGING & WEB SERVER SETUP ---
+
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 app = Flask('')
 socketio = SocketIO(app, async_mode='threading')
@@ -28,7 +26,7 @@ def log_and_emit(message):
     log_messages.append(full_message)
     socketio.emit('new_log', {'data': full_message})
 
-# --- WEB ROUTES ---
+# web routes
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -38,12 +36,12 @@ def handle_connect():
     log_and_emit("--> [Web Console] A user connected to the status page.")
     socketio.emit('history', {'logs': list(log_messages)})
 
-# --- CONFIGURATION ---
+# cfg
 TOKEN = os.environ['TOKEN']
 CHANNEL_ID = int(os.environ['CHANNEL_ID'])
 BOT_URL = os.environ.get('RENDER_EXTERNAL_URL', '')
 
-# --- BOT CODE ---
+# main
 intents = discord.Intents.default()
 client = discord.Client(intents=intents)
 previous_statuses = {}
@@ -65,7 +63,10 @@ async def on_ready():
     log_and_emit(f'{client.user} has connected to Discord!')
     check_executor_status.start()
 
-@tasks.loop(seconds=120)
+
+
+# ignore the shitty code lmaoo
+@tasks.loop(seconds=130)
 async def check_executor_status():
     await client.wait_until_ready()
     global previous_statuses
@@ -113,7 +114,6 @@ async def check_executor_status():
                     log_and_emit(f"Error: Channel {CHANNEL_ID} not found or not a text channel.")
         previous_statuses = current_statuses
 
-# --- STARTUP ---
 def run_bot():
     client.run(TOKEN)
 
