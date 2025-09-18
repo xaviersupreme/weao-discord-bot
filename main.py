@@ -33,24 +33,30 @@ previous_statuses = {}
 
 def get_executor_statuses():
     """Fetches statuses by running the 'curl' command."""
+
+    print("--> [API Fetch] Attempting to pull data from WEAO API...")
+    
     url = "https://weao.xyz/api/status/exploits"
     command = ['curl', '--silent', '--connect-timeout', '10', '-A', "WEAO-3PService", url]
     try:
         result = subprocess.run(command, capture_output=True, text=True, check=True)
+
+        print("--> [API Fetch] Success! Data received.")
+        
         return json.loads(result.stdout)
     except (subprocess.CalledProcessError, json.JSONDecodeError, Exception) as e:
-        print(f"An error occurred in get_executor_statuses: {e}")
+        print(f"--> [API Fetch] FAILED. An error occurred: {e}")
         return None
 
 @client.event
 async def on_ready():
     """This function runs when the bot has successfully connected to Discord."""
     # This test line will trigger a notification on startup
-    previous_statuses["Solara"] = {'updateStatus': False}
+    previous_statuses["Zenith"] = {'updateStatus': True}
     print(f'{client.user} has connected to Discord!')
     check_executor_status.start()
 
-@tasks.loop(minutes=5)
+@tasks.loop(seconds=120)
 async def check_executor_status():
     """The main loop that checks for status changes."""
     await client.wait_until_ready()
