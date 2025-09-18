@@ -1,111 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>WEAO Status Bot — System Status</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --background-color: #0f1116;
-      --card-color: #181a1f;
-      --primary-text: #f5f5f7;
-      --secondary-text: #9ca3af;
-      --accent: #22c55e;
-      --shadow: rgba(0, 0, 0, 0.35);
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--background-color);
-      color: var(--primary-text);
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
-      line-height: 1.6;
-    }
-
-    .container {
-      background-color: var(--card-color);
-      padding: 3rem 3.5rem;
-      border-radius: 20px;
-      box-shadow: 0 12px 30px var(--shadow);
-      border-top: 4px solid var(--accent);
-      max-width: 520px;
-      width: 90%;
-    }
-
-    .status-indicator {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 1.5rem;
-    }
-
-    .status-dot {
-      width: 14px;
-      height: 14px;
-      background-color: var(--accent);
-      border-radius: 50%;
-      animation: pulse 1.5s infinite;
-    }
-
-    @keyframes pulse {
-      0%   { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6); }
-      70%  { box-shadow: 0 0 0 18px rgba(34, 197, 94, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
-    }
-
-    .status-text {
-      font-size: 1.3rem;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-    }
-
-    h1 {
-      font-size: 1.75rem;
-      margin: 0.75rem 0 0.5rem;
-      font-weight: 700;
-    }
-
-    p {
-      font-size: 0.95rem;
-      color: var(--secondary-text);
-      margin-bottom: 2rem;
-    }
-
-    .footer {
-      font-size: 0.8rem;
-      color: #6b7280;
-      letter-spacing: 0.3px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEAO Status Bot - Operational</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Fira+Code&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <style>
+        :root {
+            --background-color: #121212;
+            --card-color: #1e1e1e;
+            --primary-text-color: #e0e0e0;
+            --secondary-text-color: #b0b0b0;
+            --accent-color: #25d366;
+            --shadow-color: rgba(0, 0, 0, 0.2);
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--primary-text-color);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: var(--card-color);
+            padding: 40px 50px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px var(--shadow-color);
+            border-top: 5px solid var(--accent-color);
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+        }
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .status-dot {
+            width: 15px;
+            height: 15px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+        .status-text { font-size: 1.5rem; font-weight: 600; color: var(--primary-text-color); }
+        h1 { font-size: 2rem; margin: 10px 0; font-weight: 600; }
+        p { font-size: 1rem; color: var(--secondary-text-color); margin-bottom: 30px; }
+        .console {
+            background-color: #0d0d0d;
+            border: 1px solid #333;
+            border-radius: 8px;
+            margin-top: 30px;
+            height: 300px;
+            overflow-y: scroll;
+            text-align: left;
+            padding: 15px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: #ccc;
+        }
+        .console-line {
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <div class="status-indicator">
-      <div class="status-dot"></div>
-      <div class="status-text">All Systems Operational</div>
+    <div class="container">
+        <div class="status-indicator">
+            <div class="status-dot"></div>
+            <div class="status-text">All Systems Operational</div>
+        </div>
+        <h1>WEAO Status Bot</h1>
+        <p>Live console feed from the bot monitoring executor statuses.</p>
+        <div class="console" id="log-console">
+            <div class="console-line">Connecting to server...</div>
+        </div>
     </div>
-    <h1>WEAO Status Bot</h1>
-    <p>This status page confirms that the Discord bot is online and actively monitoring executor availability.</p>
-    <div class="footer">
-      Current Server Time: <span id="live-time"></span>
-    </div>
-  </div>
+    <script>
+        const socket = io();
+        const consoleDiv = document.getElementById('log-console');
 
-  <script>
-    function updateTime() {
-      const el = document.getElementById('live-time');
-      const now = new Date();
-      el.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-    }
-    setInterval(updateTime, 1000);
-    updateTime();
-  </script>
+        function addLog(message) {
+            const line = document.createElement('div');
+            line.className = 'console-line';
+            line.textContent = message;
+            consoleDiv.appendChild(line);
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+        }
+
+        socket.on('connect', function() {
+            consoleDiv.innerHTML = ''; 
+            addLog('Connection established. Waiting for logs...');
+        });
+
+        socket.on('history', function(msg) {
+            consoleDiv.innerHTML = '';
+            msg.logs.forEach(log => addLog(log));
+        });
+
+        socket.on('new_log', function(msg) {
+            addLog(msg.data);
+        });
+    </script>
 </body>
 </html>
