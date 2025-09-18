@@ -52,7 +52,7 @@ def get_executor_statuses():
 async def on_ready():
     """This function runs when the bot has successfully connected to Discord."""
     # This test line will trigger a notification on startup
-    previous_statuses["Zenith"] = {'updateStatus': True}
+    previous_statuses["Matcha"] = {'updateStatus': False}
     print(f'{client.user} has connected to Discord!')
     check_executor_status.start()
 
