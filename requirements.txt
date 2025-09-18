@@ -3,3 +3,4 @@ requests
 Flask
 Flask-SocketIO
 gunicorn
+gevent-websocket
