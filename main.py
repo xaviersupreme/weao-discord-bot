@@ -62,7 +62,6 @@ def get_executor_statuses():
 
 @client.event
 async def on_ready():
-    previous_statuses["Matcha"] = {'updateStatus': False}
     log_and_emit(f'{client.user} has connected to Discord!')
     check_executor_status.start()
 
