@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEAO Status Bot - Operational</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background-color: #121212;
+            --card-color: #1e1e1e;
+            --primary-text-color: #e0e0e0;
+            --secondary-text-color: #b0b0b0;
+            --accent-color: #25d366;
+            --shadow-color: rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--primary-text-color);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .container {
+            background-color: var(--card-color);
+            padding: 40px 50px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px var(--shadow-color);
+            border-top: 5px solid var(--accent-color);
+            max-width: 500px;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .status-dot {
+            width: 15px;
+            height: 15px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        .status-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-text-color);
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin: 10px 0;
+            font-weight: 600;
+        }
+
+        p {
+            font-size: 1rem;
+            color: var(--secondary-text-color);
+            margin-bottom: 30px;
+        }
+
+        .footer {
+            font-size: 0.8rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="status-indicator">
+            <div class="status-dot"></div>
+            <div class="status-text">All Systems Operational</div>
+        </div>
+        <h1>WEAO Status Bot</h1>
+        <p>This page confirms that the Discord bot is online and actively monitoring executor statuses.</p>
+        <div class="footer">
+            Current Server Time: <span id="live-time"></span>
+        </div>
+    </div>
+
+    <script>
+        function updateTime() {
+            const timeElement = document.getElementById('live-time');
+            const now = new Date();
+            timeElement.innerText = now.toLocaleTimeString();
+        }
+        setInterval(updateTime, 1000);
+        updateTime(); // Initial call
+    </script>
+</body>
+</html>
